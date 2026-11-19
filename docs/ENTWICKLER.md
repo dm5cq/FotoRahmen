@@ -306,7 +306,7 @@ Der Workflow startet die fertige EXE/App zusätzlich 15 Sekunden lang als Raucht
 1. `app_info.py`: `VERSION`, `RELEASE_DATE`.
 2. `CHANGELOG.md`: Abschnitt ergänzen.
 3. `python selftest.py`.
-4. Commit, dann Tag: `git tag v1.2.0 && git push --tags` → GitHub baut und legt das Release mit EXE und Apps an.
+4. Auf GitHub unter Releases ein neues Release mit neuem Tag (z. B. `2.1.0`) veröffentlichen – GitHub baut und hängt EXE und Apps an. Nachträglich: Actions › FotoRahmen bauen › Run workflow mit dem Tag-Namen.
 
 ## Bekannte Grenzen
 - RAW-Formate werden nicht gelesen (bewusst; Export als TIFF empfohlen).
