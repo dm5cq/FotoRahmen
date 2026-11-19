@@ -1,0 +1,59 @@
+OK     Wie Original   a.jpg    -> a_rahmen.jpg  346x456
+OK     Wie Original   b.png    -> b_rahmen.png  446x356
+OK     Wie Original   c.jpg    -> c_rahmen.jpg  446x356
+OK     Wie Original   d.webp   -> d_rahmen.webp  446x356
+OK     Wie Original   e.bmp    -> e_rahmen.bmp  446x356
+OK     Wie Original   f.gif    -> f_rahmen.gif  166x136
+OK     Wie Original   g16.tif  -> g16_rahmen.tif  446x356
+OK     Wie Original   h.tif    -> h_rahmen.tif  446x356
+OK     Wie Original   j.webp   -> j_rahmen.webp  446x356
+OK     JPEG (.jpg)    a.jpg    -> a_rahmen.jpg  346x456
+OK     JPEG (.jpg)    b.png    -> b_rahmen.jpg  446x356
+OK     JPEG (.jpg)    c.jpg    -> c_rahmen.jpg  446x356
+OK     JPEG (.jpg)    d.webp   -> d_rahmen.jpg  446x356
+OK     JPEG (.jpg)    e.bmp    -> e_rahmen.jpg  446x356
+OK     JPEG (.jpg)    f.gif    -> f_rahmen.jpg  166x136
+OK     JPEG (.jpg)    g16.tif  -> g16_rahmen.jpg  446x356
+OK     JPEG (.jpg)    h.tif    -> h_rahmen.jpg  446x356
+OK     JPEG (.jpg)    j.webp   -> j_rahmen.jpg  446x356
+OK     PNG (.png)     a.jpg    -> a_rahmen.png  346x456
+OK     PNG (.png)     b.png    -> b_rahmen.png  446x356
+OK     PNG (.png)     c.jpg    -> c_rahmen.png  446x356
+OK     PNG (.png)     d.webp   -> d_rahmen.png  446x356
+OK     PNG (.png)     e.bmp    -> e_rahmen.png  446x356
+OK     PNG (.png)     f.gif    -> f_rahmen.png  166x136
+OK     PNG (.png)     g16.tif  -> g16_rahmen.png  446x356
+OK     PNG (.png)     h.tif    -> h_rahmen.png  446x356
+OK     PNG (.png)     j.webp   -> j_rahmen.png  446x356
+OK     TIFF (.tif)    a.jpg    -> a_rahmen.tif  346x456
+OK     TIFF (.tif)    b.png    -> b_rahmen.tif  446x356
+OK     TIFF (.tif)    c.jpg    -> c_rahmen.tif  446x356
+OK     TIFF (.tif)    d.webp   -> d_rahmen.tif  446x356
+OK     TIFF (.tif)    e.bmp    -> e_rahmen.tif  446x356
+OK     TIFF (.tif)    f.gif    -> f_rahmen.tif  166x136
+OK     TIFF (.tif)    g16.tif  -> g16_rahmen.tif  446x356
+OK     TIFF (.tif)    h.tif    -> h_rahmen.tif  446x356
+OK     TIFF (.tif)    j.webp   -> j_rahmen.tif  446x356
+OK     WebP (.webp)   a.jpg    -> a_rahmen.webp  346x456
+OK     WebP (.webp)   b.png    -> b_rahmen.webp  446x356
+OK     WebP (.webp)   c.jpg    -> c_rahmen.webp  446x356
+OK     WebP (.webp)   d.webp   -> d_rahmen.webp  446x356
+OK     WebP (.webp)   e.bmp    -> e_rahmen.webp  446x356
+OK     WebP (.webp)   f.gif    -> f_rahmen.webp  166x136
+OK     WebP (.webp)   g16.tif  -> g16_rahmen.webp  446x356
+OK     WebP (.webp)   h.tif    -> h_rahmen.webp  446x356
+OK     WebP (.webp)   j.webp   -> j_rahmen.webp  446x356
+OK     Neu            gross.jpg    -> gross.jpg  1024x750
+OK     Neu            gross.jpg    -> gross.png  1024x765
+OK     Neu            gross.jpg    -> gross.webp  1024x765
+OK     Neu            gross.jpg    -> gross.tif  1024x750
+OK     Neu            gross16.tif  -> gross16.jpg  1024x750
+OK     Neu            gross16.tif  -> gross16.png  1024x765
+OK     Neu            gross16.tif  -> gross16.webp  1024x765
+OK     Neu            gross16.tif  -> gross16.tif  1024x750
+OK     Schutz         schutz.png   -> schutz.jpg
+OK     Schutz         schutz.png   -> schutz.png
+OK     Schutz         schutz.png   -> schutz.tif
+OK     Schutz         schutz.png   -> schutz.webp
+HEIC-Unterstützung: nein
+Ergebnis: alles in Ordnung

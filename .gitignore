@@ -1,0 +1,11 @@
+__pycache__/
+build/
+buildinfo/
+dist/
+*.spec
+.DS_Store
+.ruff_cache/
+ios/build/
+ios/ipa/
+*.xcuserstate
+xcuserdata/

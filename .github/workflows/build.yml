@@ -1,0 +1,138 @@
+# FotoRahmen – Copyright (c) 2026 Stefan J. Kaiser – Lizenz: GPL v3
+name: FotoRahmen bauen
+
+# Baut bei jedem Push automatisch:
+#   - FotoRahmen.exe                     (Windows, eine einzelne Datei)
+#   - FotoRahmen.app für Apple Silicon   (M1–M4)
+#   - FotoRahmen.app für Intel-Macs
+# Die Dateien liegen danach im Actions-Lauf unter "Artifacts".
+# Wird ein Tag wie v1.5.0 gepusht, entsteht zusätzlich ein GitHub-Release.
+
+on:
+  push:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: windows-latest
+            name: FotoRahmen-Windows
+            file: dist/FotoRahmen.exe
+          - os: macos-latest
+            name: FotoRahmen-macOS-AppleSilicon
+            file: dist/FotoRahmen-macOS.zip
+          - os: macos-15-intel
+            name: FotoRahmen-macOS-Intel
+            file: dist/FotoRahmen-macOS.zip
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Abhängigkeiten installieren
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -r requirements.txt pyinstaller
+
+      - name: Selbsttest
+        run: python selftest.py
+
+      - name: Windows-EXE bauen
+        if: runner.os == 'Windows'
+        shell: cmd
+        run: |
+          python make_version_info.py
+          python -m PyInstaller --noconfirm --clean --onefile --windowed --name FotoRahmen --icon assets\icon.ico --version-file buildinfo\version_info.txt --add-data "assets;assets" --collect-all pillow_heif --collect-submodules imagecodecs --collect-all tkinterdnd2 fotorahmen.py
+
+      - name: Windows-EXE starten (Rauchtest)
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          $p = Start-Process -FilePath dist\FotoRahmen.exe -PassThru
+          Start-Sleep -Seconds 15
+          if ($p.HasExited) { Write-Error "EXE hat sich sofort beendet (Code $($p.ExitCode))"; exit 1 }
+          Stop-Process -Id $p.Id -Force
+          Write-Host "EXE startet und läuft."
+
+      - name: macOS-App bauen
+        if: runner.os == 'macOS'
+        env:
+          SKIP_SETUP: "1"
+        run: bash build_macos.sh
+
+      - name: macOS-App starten (Rauchtest)
+        if: runner.os == 'macOS'
+        run: |
+          dist/FotoRahmen.app/Contents/MacOS/FotoRahmen &
+          PID=$!
+          sleep 15
+          if ! kill -0 $PID 2>/dev/null; then wait $PID; echo "App hat sich sofort beendet (Code $?)"; exit 1; fi
+          kill $PID
+          echo "App startet und läuft."
+
+      - name: Für Release umbenennen
+        shell: bash
+        run: |
+          ext="${{ matrix.file }}"; ext="${ext##*.}"
+          cp "${{ matrix.file }}" "dist/${{ matrix.name }}.$ext"
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.name }}
+          path: dist/${{ matrix.name }}.*
+
+      - name: Release anlegen (nur bei Tags v*)
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: dist/${{ matrix.name }}.*
+
+  # ---------------------------------------------------------------------------
+  # iOS / iPadOS: Prüf-Build für den Simulator + unsignierte IPA (zum Signieren
+  # mit eigener Apple-ID, z. B. über Xcode, Sideloadly oder AltStore)
+  # ---------------------------------------------------------------------------
+  ios:
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Xcode-Version
+        run: xcodebuild -version
+
+      - name: Build für den iOS-Simulator (Kompilier-Prüfung)
+        run: |
+          xcodebuild -project ios/FotoRahmen.xcodeproj -target FotoRahmen \
+            -sdk iphonesimulator -configuration Debug \
+            CODE_SIGNING_ALLOWED=NO build | tail -40
+          test ${PIPESTATUS[0]} -eq 0
+
+      - name: Build für Geräte (unsigniert) und IPA packen
+        run: |
+          xcodebuild -project ios/FotoRahmen.xcodeproj -target FotoRahmen \
+            -sdk iphoneos -configuration Release \
+            CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO CODE_SIGN_IDENTITY="" \
+            SYMROOT="$PWD/ios/build" build | tail -20
+          test ${PIPESTATUS[0]} -eq 0
+          mkdir -p ios/ipa/Payload
+          cp -R ios/build/Release-iphoneos/FotoRahmen.app ios/ipa/Payload/
+          (cd ios/ipa && zip -qry ../../FotoRahmen-iOS-unsigniert.ipa Payload)
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: FotoRahmen-iOS-unsigniert
+          path: FotoRahmen-iOS-unsigniert.ipa
+
+      - name: Release anlegen (nur bei Tags v*)
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: FotoRahmen-iOS-unsigniert.ipa

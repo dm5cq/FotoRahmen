@@ -1,0 +1,2 @@
+# Zusätzlich nur zum Erzeugen der PDF-Dokumentation
+reportlab>=4.0
