@@ -1,0 +1,20 @@
+Eingabe-Ordner: /home/claude/demo/Fotos
+Ausgabe-Ordner (automatisch): /home/claude/demo/Fotos/mit Rahmen
+Gefundene Bilder: 6
+Screenshot: 01_hauptfenster_rahmen.png
+Screenshot: 02_tab_text.png
+Screenshot: 03_tab_schutz.png
+Screenshot: 04_tab_effekte.png
+Screenshot: 05_tab_ausgabe.png
+Stapellauf gestartet
+Screenshot: 06_verarbeitung_laeuft.png
+Screenshot: 07_fertig.png
+Status: 6 Bilder mit Rahmen gespeichert.
+  Animation.gif              -> Animation_rahmen.gif             fertig  ✓  318×233
+  Bergsee_Abendrot.jpg       -> Bergsee_Abendrot_rahmen.jpg      fertig  ✓  1908×1398
+  Hochkant_mit_EXIF-Drehung.jpg -> Hochkant_mit_EXIF-Drehung_rahmen.jpg fertig  ✓  872×1332
+  Kueste_16bit.tif           -> Kueste_16bit_rahmen.tif          fertig  ✓  1590×1165
+  Stadt_Nacht.png            -> Skyline bei Nacht.png            fertig  ✓  1908×1298
+  Waldweg_Hochformat.jpg     -> Waldweg_Hochformat_rahmen.jpg    fertig  ✓  1308×1998
+Screenshot: 08_info_dialog.png
+Screenshot: 09_voreinstellung_speichern.png

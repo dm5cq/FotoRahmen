@@ -1,0 +1,7 @@
+# Laufzeit-Abhängigkeiten von FotoRahmen (tkinterdnd2 = Drag & Drop, optional) (getestet mit Pillow 12.3, tifffile 2026.9)
+pillow>=11.0,<13
+pillow-heif>=0.21
+numpy>=2.0,<3
+tifffile>=2024.8.10
+imagecodecs>=2024.6.1
+tkinterdnd2>=0.4.2

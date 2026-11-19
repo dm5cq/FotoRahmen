@@ -1,2 +1,14 @@
 # Auto detect text files and perform LF normalization
 * text=auto
+# Zeilenenden: Windows-Skripte mit CRLF, Shell-Skripte und Xcode-Projekt mit LF
+*.bat text eol=crlf
+*.sh text eol=lf
+*.pbxproj text eol=lf
+# Binärdateien
+*.png binary
+*.jpg binary
+*.ico binary
+*.icns binary
+*.tif binary
+*.gif binary
+*.pdf binary
