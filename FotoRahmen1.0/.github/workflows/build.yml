@@ -1,0 +1,79 @@
+name: FotoRahmen bauen
+
+# Baut bei jedem Push automatisch:
+#   - FotoRahmen.exe                (Windows, eine einzelne Datei)
+#   - FotoRahmen.app für Apple Silicon (M1–M4)
+#   - FotoRahmen.app für Intel-Macs
+# Die Dateien liegen danach im Actions-Lauf unter "Artifacts".
+# Wird ein Tag wie v1.0 gepusht, entsteht zusätzlich ein GitHub-Release mit allen Dateien.
+
+on:
+  push:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: windows-latest
+            name: FotoRahmen-Windows
+            file: dist/FotoRahmen.exe
+          - os: macos-latest
+            name: FotoRahmen-macOS-AppleSilicon
+            file: dist/FotoRahmen-macOS.zip
+          - os: macos-15-intel
+            name: FotoRahmen-macOS-Intel
+            file: dist/FotoRahmen-macOS.zip
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Abhängigkeiten installieren
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -r requirements.txt pyinstaller
+
+      - name: Selbsttest
+        run: python selftest.py
+
+      - name: Windows-EXE bauen
+        if: runner.os == 'Windows'
+        shell: cmd
+        run: >
+          python -m PyInstaller --noconfirm --clean --onefile --windowed
+          --name FotoRahmen --icon assets\icon.ico
+          --add-data "assets\icon.png;assets"
+          --collect-all pillow_heif --collect-submodules imagecodecs
+          fotorahmen.py
+
+      - name: macOS-App bauen
+        if: runner.os == 'macOS'
+        env:
+          SKIP_SETUP: "1"
+        run: bash build_macos.sh
+
+      - name: Umbenennen für Release
+        shell: bash
+        run: |
+          ext="${{ matrix.file }}"; ext="${ext##*.}"
+          cp "${{ matrix.file }}" "dist/${{ matrix.name }}.$ext"
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.name }}
+          path: ${{ matrix.file }}
+
+      - name: Release anlegen (nur bei Tags v*)
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: dist/${{ matrix.name }}.*
