@@ -3,6 +3,8 @@
 Legt Fotos stapelweise einen Rahmen und einen Copyright-Schutz an – als eigenständige App für **Windows (eine einzige .exe)**, **macOS (.app)** und **iPhone/iPad (iOS-App, siehe [ios/README.md](ios/README.md))**, im dunklen Design im Stil von Capture One.
 Die Originale werden nur gelesen und **nie verändert**; alle Ergebnisse landen im Ausgabe-Ordner.
 
+**⬇ Download:** [Neueste Version (Windows-EXE, macOS-App, iOS)](https://github.com/dm5cq/FotoRahmen/releases/latest) · [Dokumentation (PDF)](docs/FotoRahmen_Dokumentation.pdf) · [Entwickler-Doku](docs/ENTWICKLER.md)
+
 ![Screenshot](docs/screenshot.png)
 
 > © 2026 **Stefan J. Kaiser** · Idee und Prompt: Stefan J. Kaiser · Umsetzung: Claude Opus 5.5 (Anthropic), 3.–4. November 2026
